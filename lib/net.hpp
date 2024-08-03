@@ -44,48 +44,19 @@ public:
 class Layer
 {
 private:
-    std::string _type;
     unsigned int _in_features;
     unsigned int _out_features;
     std::vector<Node> _node;
 public:
     Layer() {}
-    Layer(std::string type, unsigned int in_features, unsigned int out_features) {
-        _type = type;
-        _in_features = in_features;
-        _out_features = out_features;
-        _node.resize(out_features, Node(in_features));
-    }
     ~Layer() { std::vector<Node>().swap(_node); }
 
-    std::string type() { return _type; }
     unsigned int in_features() { return _in_features; }
     unsigned int out_features() { return _out_features; }
 
     Node *node(unsigned int index) { return &_node[index]; }
 };
 
-class Net
-{
-private:
-    std::vector<Layer> layers;
-public:
-    Net() {}
-    ~Net() { std::vector<Layer>().swap(layers); }
 
-    void add_layer(std::string type, unsigned int in_features, unsigned int out_features) {
-        layers.push_back(Layer(type, in_features, out_features));
-    }
-    void initialize(std::default_random_engine &seed) {
-        for(unsigned int l = 0; l < layers.size(); l++) {
-            for(unsigned int n = 0; n < layers[l].out_features(); n++) {
-                std::normal_distribution<float> gaussian(0.0f, 1.0f / layers[l].in_features());
-                for(unsigned int i = 0; i < layers[l].in_features(); i++)
-                    layers[l].node(n)->set_weight(i, gaussian(seed));
-                layers[l].node(n)->set_bias(0.0f);
-            }
-        }
-    }
-};
 
 #endif
