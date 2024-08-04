@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "../lib/net.hpp"
+#include "../lib/mlp.hpp"
 
 std::default_random_engine seed(std::chrono::system_clock::now().time_since_epoch().count());
 
