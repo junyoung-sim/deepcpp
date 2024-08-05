@@ -1,5 +1,6 @@
 #include <random>
 #include <chrono>
+#include <vector>
 #include <cstdlib>
 #include <iostream>
 
@@ -14,9 +15,15 @@ int main(int argc, char *argv[])
 
     MLP net;
     net.set_input_size(3);
+    net.set_output_type("softmax");
     net.add_layer(3);
-    net.add_layer(1);
+    net.add_layer(2);
     net.initialize(seed);
+
+    std::vector<float> x = {-1.0, 0.0, 1.0};
+    std::vector<float> y = net.forward(x);
+
+    std::cout << y[0] << " " << y[1] << "\n";
 
     return 0;
 }
