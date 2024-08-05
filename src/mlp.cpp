@@ -81,3 +81,37 @@ std::vector<float> MLP::forward(std::vector<float> &x) {
     
     return _act.back();
 }
+
+std::vector<float> MLP::update(std::vector<float> &x, std::vector<float> &y, float alpha, float lambda) {
+    std::vector<float> out = forward(x);
+    std::vector<float> ierr(_input_size, 0.0f);
+    for(int l = _shape.size() - 1; l >= 0; l--) {
+        float partial_gradient = 0.0f, full_gradient = 0.0f;
+        unsigned int in_features = (l == 0 ? _input_size : _shape[l-1]);
+        for(unsigned int n = 0; n < _shape[l]; n++) {
+            if(l == _shape.size() - 1) {
+                if(_output_type == "linear") partial_gradient = -2.0f * (y[n] - out[n]);
+                if(_output_type == "softmax") partial_gradient = out[n] - y[n];
+            }
+            else partial_gradient = _err[l][n] * drelu(_sum[l][n]);
+
+            _bias[l][n] -= alpha * partial_gradient;
+            for(unsigned int i = 0; i < in_features; i++) {
+                if(l == 0) {
+                    full_gradient = partial_gradient * x[i];
+                    ierr[i] += partial_gradient * _weight[l][n][i];
+                }
+                else {
+                    full_gradient = partial_gradient * _act[l-1][i];
+                    _err[l-1][i] = 0.0f;
+                    _err[l-1][i] += partial_gradient * _weight[l][n][i];
+                }
+
+                full_gradient += lambda * _weight[l][n][i];
+
+                _weight[l][n][i] -= alpha * full_gradient;
+            }
+        }
+    }
+    return ierr;
+}

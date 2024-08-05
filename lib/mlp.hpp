@@ -42,6 +42,8 @@ public:
     void initialize(std::default_random_engine &seed);
 
     std::vector<float> forward(std::vector<float> &x);
+
+    std::vector<float> update(std::vector<float> &x, std::vector<float> &y, float alpha, float lambda);
 };
 
 #endif
