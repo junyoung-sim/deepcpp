@@ -5,10 +5,7 @@
 #include <random>
 #include <string>
 
-float relu(float x);
-float drelu(float x);
-
-float dot_product(std::vector<float> &a, std::vector<float> &b);
+#include "math.hpp"
 
 class MLP
 {
