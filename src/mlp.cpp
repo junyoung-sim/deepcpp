@@ -3,8 +3,6 @@
 #include <chrono>
 #include <cstdlib>
 
-#include <iostream>
-
 #include "../lib/mlp.hpp"
 
 float relu(float x) { return std::max(0.0f, x); }
@@ -47,11 +45,8 @@ void MLP::initialize(std::default_random_engine &seed) {
     for(unsigned int l = 0; l < _shape.size(); l++) {
         unsigned int in_features = (l == 0 ? _input_size : _shape[l-1]);
         for(unsigned int n = 0; n < _shape[l]; n++) {
-            for(unsigned int i = 0; i < in_features; i++) {
+            for(unsigned int i = 0; i < in_features; i++)
                 _weight[l][n].push_back(gaussian(seed) / in_features);
-                std::cout << _weight[l][n][i] << " ";
-            }
-            std::cout << "\n";
         }
     }
 }
@@ -106,9 +101,7 @@ std::vector<float> MLP::update(std::vector<float> &x, std::vector<float> &y, flo
                     _err[l-1][i] = 0.0f;
                     _err[l-1][i] += partial_gradient * _weight[l][n][i];
                 }
-
                 full_gradient += lambda * _weight[l][n][i];
-
                 _weight[l][n][i] -= alpha * full_gradient;
             }
         }
