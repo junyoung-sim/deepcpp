@@ -2,10 +2,7 @@
 #include <cstdlib>
 #include "../lib/cnn.hpp"
 
-void ConvPool2D::use_pooling(unsigned int pool_rows, unsigned int pool_cols) {
-    _pool_rows = pool_rows;
-    _pool_cols = pool_cols;
-}
+#include <iostream>
 
 std::vector<std::vector<float>> ConvPool2D::forward(std::vector<std::vector<float>> &x) {
     std::vector<std::vector<float>> conv;
@@ -22,6 +19,13 @@ std::vector<std::vector<float>> ConvPool2D::forward(std::vector<std::vector<floa
         conv.push_back(row);
     }
 
+    for(unsigned int i = 0; i < conv.size(); i++) {
+        for(unsigned int j = 0; j < conv[0].size(); j++)
+            std::cout << conv[i][j] << " ";
+        std::cout << "\n";
+    }
+    std::cout << "\n";
+
     if(_pool_rows == 0 && _pool_cols == 0) return conv;
 
     std::vector<std::vector<float>> pool;
@@ -37,5 +41,13 @@ std::vector<std::vector<float>> ConvPool2D::forward(std::vector<std::vector<floa
         }
         pool.push_back(row);
     }
+
+    for(unsigned int i = 0; i < pool.size(); i++) {
+        for(unsigned int j = 0; j < pool[0].size(); j++)
+            std::cout << pool[i][j] << " ";
+        std::cout << "\n";
+    }
+    std::cout << "\n";
+
     return pool;
 }
