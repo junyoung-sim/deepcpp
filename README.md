@@ -1,6 +1,10 @@
+# DeepCPP
+
+DeepCPP is a simple deep learning framework in C++ built from scratch that intends to provide easily configurable and deployable models for various application-specific needs.
+
 ## Multi-Layer Perceptron (Deep Neural Network)
 
-This framework allows easily configurable and deployable multi-layer perceptrons, also known as deep neural networks. The following is a general implementation guideline:
+The following is a general guideline for implementing multi-layer perceptrons, also known as deep neural networks.
 
 ```cpp
 #include "../lib/mlp.hpp"
@@ -14,15 +18,19 @@ int main(int argc, char *argv[])
     net.set_input_size(...); // specify input size
     net.add_layer(...); // specify number of neurons in the layer being added
     /*
-        add as many layers as needed
+        add as many layers as needed (ReLU is used)
     */
     net.set_output_type(...); // specify one of the following: {"linear", "softmax", "relu"}
     net.initialize(seed);
 
     // training (application-specific)
     for(...) {
-        net.update(x, y, learning_rate, l2_regularization); // x, y: std::vector<float>
-                                                            // learning_rate, l2_regularization: float
+        net.update(x, y, learning_rate, l2_regularization);
+        /*
+            stochastic gradient descent
+            x, y: std::vector<float>
+            learning_rate, l2_regularization: float
+        */
     }
 
     // inference
@@ -31,8 +39,6 @@ int main(int argc, char *argv[])
     return 0;
 }
 ```
-
-Stochastic gradient descent is implemented in MLP::update(x, y, alpha, lambda). The ReLU activation function is used for the hidden layers. Further modifications can be conveniently made in ./lib/mlp.hpp, ./src/mlp.cpp, and relevant application-specific source files.
 
 ## Convolutional Neural Network
 
