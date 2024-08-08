@@ -2,8 +2,6 @@
 #include <cstdlib>
 #include "../lib/cnn.hpp"
 
-#include <iostream>
-
 std::vector<std::vector<float>> ConvPool2D::forward(std::vector<std::vector<float>> &x) {
     std::vector<std::vector<float>> conv;
     for(unsigned int i0 = 0; i0 <= x.size() - _kernel_rows; i0++) {
@@ -18,13 +16,6 @@ std::vector<std::vector<float>> ConvPool2D::forward(std::vector<std::vector<floa
         }
         conv.push_back(row);
     }
-
-    for(unsigned int i = 0; i < conv.size(); i++) {
-        for(unsigned int j = 0; j < conv[0].size(); j++)
-            std::cout << conv[i][j] << " ";
-        std::cout << "\n";
-    }
-    std::cout << "\n";
 
     if(_pool_rows == 0 && _pool_cols == 0) return conv;
 
@@ -41,13 +32,5 @@ std::vector<std::vector<float>> ConvPool2D::forward(std::vector<std::vector<floa
         }
         pool.push_back(row);
     }
-
-    for(unsigned int i = 0; i < pool.size(); i++) {
-        for(unsigned int j = 0; j < pool[0].size(); j++)
-            std::cout << pool[i][j] << " ";
-        std::cout << "\n";
-    }
-    std::cout << "\n";
-
     return pool;
 }

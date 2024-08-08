@@ -6,8 +6,6 @@
 
 #include "math.hpp"
 
-#include <iostream>
-
 class ConvPool2D
 {
 private:
@@ -28,13 +26,9 @@ public:
         
         std::normal_distribution<float> gaussian(0.0f, 1.0f);
         for(unsigned int i = 0; i < _kernel_rows; i++) {
-            for(unsigned int j = 0; j < _kernel_cols; j++) {
+            for(unsigned int j = 0; j < _kernel_cols; j++)
                 _weight[i][j] = gaussian(seed) / (_kernel_rows * _kernel_cols);
-                std::cout << _weight[i][j] << " ";
-            }
-            std::cout << "\n";
         }
-        std::cout << "\n";
 
         _pool_rows = shape[2];
         _pool_cols = shape[3];

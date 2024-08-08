@@ -48,13 +48,7 @@ void mlp_softmax() {
 }
 
 void cnn() {
-    std::vector<std::vector<float>> x = {{1., 1., 0., 0., 1.},
-                                         {1., 0., 1., 0., 0.},
-                                         {0., 1., 0., 1., 0.},
-                                         {0., 1., 1., 1., 0.},
-                                         {0., 0., 1., 0., 1.}};
-    ConvPool2D l0({2, 2, 2, 2}, seed);
-    l0.forward(x);
+    
 }
 
 int main(int argc, char *argv[])
