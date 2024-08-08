@@ -3,6 +3,8 @@
 This framework allows easily configurable and deployable multi-layer perceptrons, also known as deep neural networks. The following is a general implementation guideline:
 
 ```cpp
+#include "../lib/mlp.hpp"
+
 // declare a global random engine initialized with the system clock
 std::default_random_engine seed(std::chrono::system_clock::now().time_since_epoch().count());
 
@@ -30,10 +32,8 @@ int main(int argc, char *argv[])
 }
 ```
 
-ATTENTION: MODEL PARAMETER SAVE/LOAD (TO BE IMPLEMENTED)
+Stochastic gradient descent is implemented in MLP::update(x, y, alpha, lambda). The ReLU activation function is used for the hidden layers. Further modifications can be conveniently made in ./lib/mlp.hpp and ./src/mlp.cpp based on application-specific requirements.
 
 ## Convolutional Neural Network
 
-COMING SOON!
-
-CURRENT PROGRESS (2024-08-07): CONVPOOL2D CLASS IS COMPLETE AND VERIFIED.
+CURRENT PROGRESS (2024-08-07): CONVPOOL2D CLASS IS COMPLETE AND VERIFIED. CNN CLASS WILL BE IMPLEMENTED.
