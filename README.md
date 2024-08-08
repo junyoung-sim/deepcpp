@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     /*
         add as many layers as needed
     */
-    net.set_output_type(...); // one of the following: {"linear", "softmax", "relu"}
+    net.set_output_type(...); // specify one of the following: {"linear", "softmax", "relu"}
     net.initialize(seed);
 
     // training (application-specific)
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 }
 ```
 
-Stochastic gradient descent is implemented in MLP::update(x, y, alpha, lambda). The ReLU activation function is used for the hidden layers. Further modifications can be conveniently made in ./lib/mlp.hpp and ./src/mlp.cpp based on application-specific requirements.
+Stochastic gradient descent is implemented in MLP::update(x, y, alpha, lambda). The ReLU activation function is used for the hidden layers. Further modifications can be conveniently made in ./lib/mlp.hpp, ./src/mlp.cpp, and relevant application-specific source files.
 
 ## Convolutional Neural Network
 
