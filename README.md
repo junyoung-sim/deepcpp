@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     /*
         add as many layers as needed (ReLU is used)
     */
-    net.set_output_type(...); // specify one of the following: {"linear", "softmax", "relu"}
+    net.set_output_type(...); // specify one of the following: {"linear", "softmax"}
     net.initialize(seed);
 
     // training (application-specific)
