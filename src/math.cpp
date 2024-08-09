@@ -1,9 +1,12 @@
+#include <cmath>
 #include <vector>
 #include <cstdlib>
 #include "../lib/math.hpp"
 
 float relu(float x) { return std::max(0.0f, x); }
 float drelu(float x) { return (float)(x > 0.0f); }
+
+float sigmoid(float x) { return 1.0f / (1 + exp(-x)); }
 
 float dot_product(std::vector<float> &a, std::vector<float> &b) {
     try {

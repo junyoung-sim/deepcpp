@@ -6,7 +6,6 @@
 #include <iostream>
 
 #include "../lib/mlp.hpp"
-#include "../lib/cnn.hpp"
 
 std::default_random_engine seed(std::chrono::system_clock::now().time_since_epoch().count());
 
@@ -15,7 +14,33 @@ int main(int argc, char *argv[])
     std::cout << std::fixed;
     std::cout.precision(12);
 
-    
+    std::normal_distribution<float> gaussian(0.0f, 1.0f);
+    std::vector<float> x;
+    for(unsigned int i = 0; i < 5; i++)
+        x.push_back(gaussian(seed));
+    std::vector<float> y = {1.0, 1.0, 0.0};
+
+    MLP logreg;
+    logreg.set_input_size(5);
+    logreg.add_layer(5);
+    logreg.add_layer(5);
+    logreg.add_layer(3);
+    logreg.set_output_type("sigmoid");
+    logreg.initialize(seed);
+
+    for(unsigned int t = 0; t < 10000; t++) {
+        logreg.update(x, y, 0.001, 0.01);
+
+        if(t % 1000) continue;
+
+        std::vector<float> out = logreg.forward(x);
+        
+        float loss = 0.0f;
+        for(unsigned int i = 0; i < out.size(); i++)
+            loss += -1.0f * y[i] * log(out[i]) - (1.0f - y[i]) * log(1.0f - out[i]);
+
+        std::cout << "L=" << loss << ": [" << out[0] << " " << out[1] << " " << out[2] << "]\n";
+    }
 
     return 0;
 }

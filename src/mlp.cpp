@@ -49,6 +49,7 @@ std::vector<float> MLP::forward(std::vector<float> &x) {
                 continue;
             }
             if(_output_type == "linear") _act[l][n] = _sum[l][n];
+            if(_output_type == "sigmoid") _act[l][n] = sigmoid(_sum[l][n]);
             if(_output_type == "softmax") exp_sum += exp(_sum[l][n]);
         }
     }
@@ -68,7 +69,7 @@ std::vector<float> MLP::update(std::vector<float> &x, std::vector<float> &y, flo
         for(unsigned int n = 0; n < _shape[l]; n++) {
             if(l == _shape.size() - 1) {
                 if(_output_type == "linear") partial_gradient = -2.0f * (y[n] - out[n]);
-                if(_output_type == "softmax") partial_gradient = out[n] - y[n];
+                if(_output_type == "sigmoid" || _output_type == "softmax") partial_gradient = out[n] - y[n];
             }
             else partial_gradient = _err[l][n] * drelu(_sum[l][n]);
 

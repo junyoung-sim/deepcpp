@@ -6,6 +6,8 @@
 float relu(float x);
 float drelu(float x);
 
+float sigmoid(float x);
+
 float dot_product(std::vector<float> &a, std::vector<float> &b);
 
 #endif
