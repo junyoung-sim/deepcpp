@@ -1,10 +1,8 @@
 # DeepCPP
 
-DeepCPP is a simple deep learning framework in C++ built from scratch.
+DeepCPP is a simple deep learning framework in C++ built from scratch for statistical experiments and applications that may require easily configurable and deployable deep neural networks.
 
-## Multi-Layer Perceptron (Deep Neural Network)
-
-The following is a general guideline for implementing multi-layer perceptrons, also known as deep neural networks.
+The following is a general guideline:
 
 ```cpp
 #include "../lib/mlp.hpp"
@@ -39,7 +37,3 @@ int main(int argc, char *argv[])
     return 0;
 }
 ```
-
-## Convolutional Neural Network
-
-CONVPOOL2D CLASS IS COMPLETE (2024-08-07). CNN CLASS WILL BE IMPLEMENTED SOON.
