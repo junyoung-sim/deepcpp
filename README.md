@@ -1,6 +1,6 @@
 # DeepCPP
 
-DeepCPP is a simple deep learning framework in C++ built from scratch for statistical experiments and applications involving regression or classification tasks that may require easily configurable and deployable deep neural networks.
+DeepCPP is a simple deep learning framework in C++ built from scratch for regression or classification tasks that may require easily configurable and deployable deep neural networks.
 
 The following is a general guideline:
 
