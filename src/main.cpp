@@ -10,7 +10,37 @@
 std::default_random_engine seed(std::chrono::system_clock::now().time_since_epoch().count());
 
 void test_regression() {
+    std::normal_distribution<float> gaussian(0.0f, 1.0f);
+    std::vector<float> x;
+    for(unsigned int i = 0; i < 5; i++)
+        x.push_back(gaussian(seed));
+    std::vector<float> y = {0.25, 0.50, 0.75};
 
+    MLP reg;
+    reg.set_input_size(5);
+    reg.add_layer(5);
+    reg.add_layer(5);
+    reg.add_layer(3);
+    reg.set_output_type("linear");
+    reg.initialize(seed);
+
+    for(unsigned int t = 1; t <= 10000; t++) {
+        reg.update(x, y, 0.001, 0.01);
+
+        if(t % 1000) continue;
+
+        std::vector<float> out = reg.forward(x);
+
+        float loss = 0.0f;
+        for(unsigned int i = 0; i < out.size(); i++)
+            loss += pow(y[i] - out[i], 2);
+        loss /= out.size();
+        
+        std::cout << "L=" << loss << " [";
+        std::cout << out[0] << " ";
+        std::cout << out[1] << " ";
+        std::cout << out[2] << "]\n";
+    }
 }
 
 void test_logistic_regression() {
@@ -85,6 +115,7 @@ int main(int argc, char *argv[])
     std::cout << std::fixed;
     std::cout.precision(12);
 
+    //test_regression();
     //test_logistic_regression();
     //test_classification();
 
