@@ -24,6 +24,7 @@ void test_regression() {
     reg.set_output_type("linear");
     reg.initialize(seed);
 
+    std::cout << "REGRESSION\n";
     for(unsigned int t = 1; t <= 10000; t++) {
         reg.update(x, y, 0.001, 0.01);
 
@@ -41,6 +42,7 @@ void test_regression() {
         std::cout << out[1] << " ";
         std::cout << out[2] << "]\n";
     }
+    std::cout << "\n";
 }
 
 void test_logistic_regression() {
@@ -58,6 +60,7 @@ void test_logistic_regression() {
     logreg.set_output_type("sigmoid");
     logreg.initialize(seed);
 
+    std::cout << "LOGISTIC REGRESSION\n";
     for(unsigned int t = 1; t <= 10000; t++) {
         logreg.update(x, y, 0.001, 0.01);
 
@@ -74,6 +77,7 @@ void test_logistic_regression() {
         std::cout << out[1] << " ";
         std::cout << out[2] << "]\n";
     }
+    std::cout << "\n";
 }
 
 void test_classification() {
@@ -91,6 +95,7 @@ void test_classification() {
     classifier.set_output_type("softmax");
     classifier.initialize(seed);
 
+    std::cout << "CLASSIFICATION\n";
     for(unsigned int t = 1; t <= 10000; t++) {
         classifier.update(x, y, 0.001, 0.01);
 
@@ -107,6 +112,7 @@ void test_classification() {
         std::cout << out[1] << " ";
         std::cout << out[2] << "]\n";
     }
+    std::cout << "\n";
 }
 
 
@@ -115,9 +121,9 @@ int main(int argc, char *argv[])
     std::cout << std::fixed;
     std::cout.precision(12);
 
-    //test_regression();
-    //test_logistic_regression();
-    //test_classification();
+    test_regression();
+    test_logistic_regression();
+    test_classification();
 
     return 0;
 }
