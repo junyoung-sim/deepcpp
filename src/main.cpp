@@ -115,15 +115,10 @@ void test_classification() {
     std::cout << "\n";
 }
 
-
 int main(int argc, char *argv[])
 {
     std::cout << std::fixed;
     std::cout.precision(12);
-
-    test_regression();
-    test_logistic_regression();
-    test_classification();
 
     return 0;
 }
