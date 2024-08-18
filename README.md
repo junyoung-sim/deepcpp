@@ -22,15 +22,17 @@ int main(int argc, char *argv[])
     net.initialize(seed);
 
     // training (application-specific)
-    net.zero_grad();
     for(...) {
-        net.backward(x, y, learning_rate, l2_regularization);
-        // x: std::vector<float>
-        // y: std::vector<float>
-        // learning_rate: float
-        // l2_regularization: float
+        net.zero_grad();
+        for(...) {
+            net.backward(x, y, learning_rate, l2_regularization);
+            // x: std::vector<float>
+            // y: std::vector<float>
+            // learning_rate: float
+            // l2_regularization: float
+        }
+        net.step();
     }
-    net.step();
 
     // inference
     std::vector<float> out = net.forward(x); // x: std::vector<float>
