@@ -22,14 +22,15 @@ int main(int argc, char *argv[])
     net.initialize(seed);
 
     // training (application-specific)
+    net.zero_grad();
     for(...) {
-        net.update(x, y, learning_rate, l2_regularization);
-        /*
-            stochastic gradient descent
-            x, y: std::vector<float>
-            learning_rate, l2_regularization: float
-        */
+        net.backward(x, y, learning_rate, l2_regularization);
+        // x: std::vector<float>
+        // y: std::vector<float>
+        // learning_rate: float
+        // l2_regularization: float
     }
+    net.step();
 
     // inference
     std::vector<float> out = net.forward(x); // x: std::vector<float>
