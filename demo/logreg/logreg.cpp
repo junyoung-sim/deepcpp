@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "../lib/mlp.hpp"
+#include "../../lib/mlp.hpp"
 
 unsigned int batch = 10;
 unsigned int input_size = 100;
