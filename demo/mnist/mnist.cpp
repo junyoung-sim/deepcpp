@@ -111,7 +111,8 @@ int main(int argc, char *argv[])
                 mnist.step();
                 mnist.zero_grad();
             }
-            mnist.backward(x[i], y[i], learning_rate, l2_regularization);
+            unsigned int k = index[i];
+            mnist.backward(x[k], y[k], learning_rate, l2_regularization);
         }
 
         float loss = 0.0f;
