@@ -1,13 +1,31 @@
+#include <cmath>
 #include <vector>
+#include <random>
+#include <chrono>
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
+#include <algorithm>
+
+#include "../../lib/mlp.hpp"
 
 std::ifstream images;
 std::ifstream labels;
 
+std::vector<std::vector<float>> x;
+std::vector<std::vector<float>> y;
+
 int magic_number, num_of_images, rows, cols;
 int label_magic_number, num_of_labels;
+int num_of_classes = 10;
+
+unsigned int batch = 10;
+unsigned int epochs = 100;
+float learning_rate = 0.001;
+float l2_regularization = 0.01;
+
+std::uniform_int_distribution<int> randint(0, num_of_classes-1);
+std::default_random_engine seed(std::chrono::system_clock::now().time_since_epoch().count());
 
 int reverse(int i) {
     unsigned char b1, b2, b3, b4;
@@ -42,18 +60,70 @@ int parse_mnist_dataset() {
     label_magic_number = reverse(label_magic_number);
     num_of_labels = reverse(num_of_labels);
 
+    x.resize(num_of_images, std::vector<float>());
+    y.resize(num_of_labels, std::vector<float>(num_of_classes, 0.0));
+
+    for(unsigned int i = 0; i < num_of_images; i++) {
+        for(unsigned int r = 0; r < rows; r++) {
+            for(unsigned int c = 0; c < cols; c++) {
+                unsigned char pixel;
+                images.read((char*)&pixel, sizeof(pixel));
+                x[i].push_back((int)pixel);
+            }
+        }
+    }
+
+    for(unsigned int i = 0; i < num_of_labels; i++) {
+        unsigned char label;
+        labels.read((char*)&label, sizeof(label));
+        y[i][label] = 1.0f;
+    }
+
+    images.close();
+    labels.close();
+
     return 1;
 }
 
 int main(int argc, char *argv[])
 {
+    std::cout << std::fixed;
+    std::cout.precision(12);
+
     if(!parse_mnist_dataset()) return 0;
 
-    std::cout << magic_number << "\n";
-    std::cout << num_of_images << "\n";
-    std::cout << rows << "x" << cols << "\n";
-    std::cout << label_magic_number << "\n";
-    std::cout << num_of_labels << "\n";
+    MLP mnist;
+    mnist.set_input_size(rows * cols);
+    mnist.add_layer(rows * cols);
+    mnist.add_layer(rows * cols);
+    mnist.add_layer(rows * cols);
+    mnist.add_layer(num_of_classes);
+    mnist.set_output_type("softmax");
+    mnist.initialize(seed);
+
+    for(unsigned int epoch = 1; epoch <= epochs; epoch++) {
+        std::vector<unsigned int> index(num_of_images);
+        std::iota(index.begin(), index.end(), 0);
+        std::shuffle(index.begin(), index.end(), seed);
+
+        for(unsigned int i = 0; i < num_of_images; i++) {
+            if(i > 0 && i % batch == 0) {
+                mnist.step();
+                mnist.zero_grad();
+            }
+            mnist.backward(x[i], y[i], learning_rate, l2_regularization);
+        }
+
+        float loss = 0.0f;
+        for(unsigned int i = 0; i < num_of_images; i++) {
+            std::vector<float> out = mnist.forward(x[i]);
+            for(unsigned int k = 0; k < num_of_classes; k++)
+                loss += -1.0f * y[i][k] * log(out[k]);
+        }
+        loss /= num_of_images;
+
+        std::cout << "[" << epoch << "/" << epochs << "] L=" << loss << "\n";
+    }
 
     return 0;
 }
