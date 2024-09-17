@@ -95,8 +95,6 @@ int main(int argc, char *argv[])
     MLP mnist;
     mnist.set_input_size(rows * cols);
     mnist.add_layer(rows * cols);
-    mnist.add_layer(rows * cols);
-    mnist.add_layer(rows * cols);
     mnist.add_layer(num_of_classes);
     mnist.set_output_type("softmax");
     mnist.initialize(seed);
