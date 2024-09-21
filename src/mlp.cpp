@@ -2,6 +2,7 @@
 #include <random>
 #include <chrono>
 #include <cstdlib>
+#include <cassert>
 
 #include "../lib/mlp.hpp"
 
@@ -99,6 +100,7 @@ void MLP::backward(std::vector<float> &x, std::vector<float> &y, float alpha, fl
 }
 
 void MLP::step() {
+    assert(_backward_count != 0);
     for(unsigned int l = 0; l < _shape.size(); l++) {
         unsigned int in_features = (l == 0 ? _input_size : _shape[l-1]);
         for(unsigned int n = 0; n < _shape[l]; n++) {
