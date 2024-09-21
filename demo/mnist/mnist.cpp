@@ -105,12 +105,13 @@ int main(int argc, char *argv[])
         std::shuffle(index.begin(), index.end(), seed);
 
         for(unsigned int i = 0; i < num_of_images; i++) {
-            if(i > 0 && i % batch == 0) {
+            unsigned int k = index[i];
+            mnist.backward(x[k], y[k], learning_rate, l2_regularization);
+
+            if(i+1 % batch == 0) {
                 mnist.step();
                 mnist.zero_grad();
             }
-            unsigned int k = index[i];
-            mnist.backward(x[k], y[k], learning_rate, l2_regularization);
         }
 
         float loss = 0.0f;
