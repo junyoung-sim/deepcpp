@@ -47,6 +47,7 @@ void MLP::initialize(std::default_random_engine &seed) {
 }
 
 std::vector<float> MLP::forward(std::vector<float> &x) {
+    assert(initialized && x.size() == _input_size);
     float exp_sum = 0.0f;
     for(unsigned int l = 0; l < _shape.size(); l++) {
         for(unsigned int n = 0; n < _shape[l]; n++) {
@@ -69,6 +70,7 @@ std::vector<float> MLP::forward(std::vector<float> &x) {
 }
 
 void MLP::backward(std::vector<float> &x, std::vector<float> &y, float alpha, float lambda) {
+    assert(initialized && x.size() == _input_size && y.size() == _shape.back());
     std::vector<float> out = forward(x);
     //std::vector<float> ierr(_input_size, 0.0f);
     for(int l = _shape.size() - 1; l >= 0; l--) {
@@ -101,7 +103,7 @@ void MLP::backward(std::vector<float> &x, std::vector<float> &y, float alpha, fl
 }
 
 void MLP::step() {
-    assert(_backward_count != 0);
+    assert(initialized && _backward_count != 0);
     for(unsigned int l = 0; l < _shape.size(); l++) {
         unsigned int in_features = (l == 0 ? _input_size : _shape[l-1]);
         for(unsigned int n = 0; n < _shape[l]; n++) {
@@ -113,6 +115,7 @@ void MLP::step() {
 }
 
 void MLP::zero_grad() {
+    assert(initialized);
     for(unsigned int l = 0; l < _shape.size(); l++) {
         unsigned int in_features = (l == 0 ? _input_size : _shape[l-1]);
         for(unsigned int n = 0; n < _shape[l]; n++) {
