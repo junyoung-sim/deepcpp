@@ -22,3 +22,9 @@ math.o: ../src/math.cpp
 	$(COM) $(VER) -c ../src/math.cpp
 mlp.o: ../src/mlp.cpp
 	$(COM) $(VER) -c ../src/mlp.cpp
+
+clean:
+	rm ./classifier/classifier
+	rm ./logreg/logreg
+	rm ./mnist/mnist
+	rm ./reg/reg
