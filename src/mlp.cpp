@@ -43,6 +43,7 @@ void MLP::initialize(std::default_random_engine &seed) {
             }
         }
     }
+    initialized = true;
 }
 
 std::vector<float> MLP::forward(std::vector<float> &x) {

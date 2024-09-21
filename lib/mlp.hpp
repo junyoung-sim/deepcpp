@@ -22,10 +22,13 @@ private:
     std::vector<std::vector<std::vector<float>>> _weight_grad;
     std::string _output_type;
 
+    bool initialized;
+
 public:
     MLP() {
         _input_size = 0;
         _backward_count = 0;
+        initialized = false;
     }
     ~MLP() {}
 
